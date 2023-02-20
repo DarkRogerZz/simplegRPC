@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcService.Protos";
+
+package ticket;
+
+import "Protos/Google/struct.proto";
+
+service TicketServer{
+	//简单模式（Simple RPC）
+	rpc SayHello(HelloRequest) returns (HelloResponse);
+	//服务端数据流模式（Server-side streaming RPC）
+	rpc QueryTicket(TicketRequest) returns(stream TicketResponse);
+	//客户端数据流模式（Client-side streaming RPC）
+	rpc BuyTicket(stream TicketRequest) returns(TicketResponse);
+	//双向数据流模式 (Bidirectional streaming RPC)
+	rpc StramingBothWay(stream TicketRequest) returns (stream TicketResponse);
+}
+
+message HelloRequest{
+	string name = 1;
+}
+
+message HelloResponse{
+	string message = 1;
+}
+
+
+message TicketRequest{
+	google.protobuf.Struct ticketInfo = 1;
+}
+
+
+message TicketResponse{
+	string result = 1;
+}
